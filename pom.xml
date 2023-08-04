@@ -22,10 +22,21 @@
     </parent>
 
     <dependencies>
+<!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+<!--redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+<!--tools-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -40,6 +51,7 @@
             <artifactId>hutool-json</artifactId>
             <version>5.8.20</version>
         </dependency>
+<!--test-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

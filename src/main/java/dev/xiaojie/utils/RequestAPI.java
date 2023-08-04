@@ -6,6 +6,7 @@ import dev.xiaojie.bean.ModelDetail;
 import dev.xiaojie.bean.Req;
 import dev.xiaojie.bean.Resp;
 import dev.xiaojie.enums.URL;
+import dev.xiaojie.exception.NotNetworkPortException;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
@@ -13,9 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 public class RequestAPI {
-    private static String apikey = "";
-    private static String proxyHost = "";
-    private static int proxyPort = 0;
+    private static final String apikey;
+    private static final String proxyHost;
+    private static int proxyPort;
     private static boolean useProxy = true;
 
     static {
@@ -25,17 +26,29 @@ public class RequestAPI {
         try {
             properties.load(classPathResource.getInputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("【错误】配置文件读取错误");
         }
 
         apikey = properties.getProperty("apikey");
-        proxyHost = properties.getProperty("proxy-host");
-        String port = properties.getProperty("proxy-port");
-        if (!"".equals(port))
-            proxyPort = Integer.parseInt(port);
+        if (apikey == null) {
+            System.out.println("【错误】没有配置api key");
+        }
 
-        if ("".equals(proxyHost) || proxyPort == 0)
+        proxyHost = properties.getProperty("proxy-host");
+        if (proxyHost == null) {
+            System.out.println("【信息】没有配置HTTP代理");
             useProxy = false;
+        }
+
+        try {
+            proxyPort = Integer.parseInt(properties.getProperty("proxy-port"));
+            if (proxyPort < 1 || proxyPort > 65535) {
+                throw new NotNetworkPortException();
+            }
+        } catch (NumberFormatException | NotNetworkPortException e) {
+            System.out.println("【信息】HTTP代理端口格式错误，停用代理");
+            useProxy = false;
+        }
     }
 
     public static List<ModelDetail> getAIModels() {
@@ -45,8 +58,11 @@ public class RequestAPI {
             request.setHttpProxy(proxyHost, proxyPort);
         }
         String body = request.execute().body();
-        String substring = body.substring(body.indexOf("["), body.lastIndexOf("]") + 1);
-        return JSONUtil.toList(substring, ModelDetail.class);
+        if (body != null) {
+            String substring = body.substring(body.indexOf("["), body.lastIndexOf("]") + 1);
+            return JSONUtil.toList(substring, ModelDetail.class);
+        }
+        return null;
     }
 
     public static Resp chatCompletion(Req req) {

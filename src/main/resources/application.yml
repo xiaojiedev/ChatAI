@@ -1,5 +1,15 @@
 spring:
   application:
     name: ChatAI
+  redis:
+    host: 10.0.0.2
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 12
+        min-idle: 0
+        max-wait: 5000ms
+    database: 7
 server:
   port: 8080
