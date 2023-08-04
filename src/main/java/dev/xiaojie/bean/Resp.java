@@ -13,6 +13,7 @@ public class Resp {
     private String id;
     private String object;
     private long created;
+    private String model;
     private List<Choices> choices;
     private Usage usage;
 }
