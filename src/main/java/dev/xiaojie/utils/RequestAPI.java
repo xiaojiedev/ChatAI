@@ -2,9 +2,9 @@ package dev.xiaojie.utils;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
-import dev.xiaojie.bean.ModelDetail;
-import dev.xiaojie.bean.Req;
-import dev.xiaojie.bean.Resp;
+import dev.xiaojie.bean.api.ModelDetail;
+import dev.xiaojie.bean.api.Req;
+import dev.xiaojie.bean.api.Resp;
 import dev.xiaojie.enums.URL;
 import dev.xiaojie.exception.NotNetworkPortException;
 import org.springframework.core.io.ClassPathResource;

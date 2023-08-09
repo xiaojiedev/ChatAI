@@ -1,4 +1,4 @@
-package dev.xiaojie.bean;
+package dev.xiaojie.bean.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

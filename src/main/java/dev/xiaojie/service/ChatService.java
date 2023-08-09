@@ -1,13 +1,14 @@
 package dev.xiaojie.service;
 
-import dev.xiaojie.bean.ModelDetail;
+import dev.xiaojie.bean.api.ModelDetail;
+import dev.xiaojie.bean.api.Req;
+import dev.xiaojie.bean.api.Resp;
 import dev.xiaojie.utils.RequestAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -42,5 +43,9 @@ public class ChatService {
                 .stream()
                 .map(Object::toString)
                 .collect(Collectors.toList());
+    }
+
+    public Resp chat(Req req) {
+        return RequestAPI.chatCompletion(req);
     }
 }

@@ -1,10 +1,7 @@
 package dev.xiaojie.utils;
 
-import dev.xiaojie.bean.Choices;
-import dev.xiaojie.bean.Messages;
-import dev.xiaojie.bean.Resp;
-
-import java.util.List;
+import dev.xiaojie.bean.api.Messages;
+import dev.xiaojie.bean.api.Resp;
 
 public class BeanUtil {
     public Messages respGetMsg(Resp resp) {
